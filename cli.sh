@@ -28,12 +28,12 @@ bash -c "nohup verdaccio &>$tmp_registry_log &"
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
 # Login so that we can "publish"
-bash -c "${} npm-cli-login -u test -p test -e test@test.com -r $local_registry"
+bash -c "${package_manager} npm-cli-login -u test -p test -e test@test.com -r $local_registry"
 
 
 # Unpublish current version
-bash -c "pnpm unpublish -f --registry $local_registry"
-# Run pnpm publish command
-bash -c "pnpm publish --registry $local_registry"
+bash -c "${package_manager} unpublish -f --registry $local_registry"
+# Run publish command
+bash -c "${package_manager} publish --registry $local_registry"
 
 read -n 1 -s -r -p "Press any key to exit and close the verdaccio server"
