@@ -2,7 +2,7 @@
 
 set -e
 
-local_registry=${LOCAL_REGISTRY_URL:-"http://0.0.0.0:4873"}
+local_registry=${LOCAL_REGISTRY_URL:-"http://localhost:4873"}
 
 # Start local registry
 tmp_registry_log=`mktemp`
@@ -20,4 +20,5 @@ bash -c "npm unpublish -f --registry $local_registry"
 # Run publish command
 bash -c "npm publish --registry $local_registry"
 
+echo "Running the registry on http://localhost:4873"
 read -n 1 -s -r -p "Press any key to exit and close the verdaccio server"
