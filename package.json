@@ -1,0 +1,18 @@
+{
+  "name": "e2e-verdaccio",
+  "version": "1.0.0",
+  "description": "Tests publishing with verdaccio and leaves it running for your use.",
+  "keywords": [
+    "verdaccio",
+    "e2e",
+    "publish",
+    "test"
+  ],
+  "license": "MIT",
+  "bin": {
+    "e2e-verdaccio": "cli.sh"
+  },
+  "os": [
+    "!win32"
+  ]
+}
