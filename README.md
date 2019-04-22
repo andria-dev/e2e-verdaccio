@@ -24,7 +24,7 @@ yarn add --dev e2e-verdaccio
 
 ### Add it to your `scripts`
 
-After installing in the package you'll need to add it to your `scripts` for easy use.
+After installing the package you'll need to add it to your `scripts` for easy use.
 
 ```json
 {
@@ -36,7 +36,7 @@ After installing in the package you'll need to add it to your `scripts` for easy
 
 ### Running it
 
-Now to run it, simply run the script.
+Now to run it, simply run the `test:publish` script.
 
 ```bash
 pnpm run test:publish
@@ -60,5 +60,5 @@ Registry Login Options:
 
 Other Options:
   --port            The port for Verdaccio. Default: 4873
-  --package-runner  The command to use for running npm packages. Defaults to pnpm when pnpm-lock.yaml exists, othwerwise, npm.
+  --package-runner  The command to use for running npm packages. Defaults to pnpx when pnpm-lock.yaml exists, othwerwise, npx.
 ```

@@ -12,7 +12,7 @@ help() {
   echo
   echo "Other Options:"
   echo -e "  --port            The port for Verdaccio. Default: 4873"
-  echo -e "  --package-runner  The command to use for running npm packages. Defaults to pnpm when pnpm-lock.yaml exists, othwerwise, npm."
+  echo -e "  --package-runner  The command to use for running npm packages. Defaults to pnpx when pnpm-lock.yaml exists, othwerwise, npx."
 }
 
 while getopts ":u:p:e:h-:" opt; do
