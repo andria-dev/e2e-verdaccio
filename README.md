@@ -1,6 +1,6 @@
 # e2e-verdaccio
 
-This is a script that you can use to test publishing via `verdaccio`. It will leave `verdaccio` running so you can use the server to test other aspects of your published package.
+This is a script that you can use to test publishing via `verdaccio`. It will leave `verdaccio` running so you can use the server to test other aspects of your published package. When you're finished it will kill it.
 
 > Can't I just use verdaccio?
 
@@ -12,7 +12,7 @@ This does all of that in one command.
 
 ### Installation
 
-If you're using `pnpm` or doing actual end-to-end testing you'll want to install this package locally, otherwise, globally installing it makes no difference.
+If you're using `pnpm` or working across multiple devices you'll want to install this package locally, otherwise, globally installing it makes no difference.
 
 ```bash
 pnpm install --dev e2e-verdaccio
