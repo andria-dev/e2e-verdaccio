@@ -12,7 +12,13 @@
   "bin": {
     "e2e-verdaccio": "cli.sh"
   },
+  "files": [
+    "cli.sh"
+  ],
   "os": [
     "!win32"
-  ]
+  ],
+  "scripts": {
+    "start": "bash cli.sh"
+  }
 }
