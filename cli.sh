@@ -64,7 +64,7 @@ fi
 
 # Start local registry
 tmp_registry_log=`mktemp`
-bash -c "nohup verdaccio &>$tmp_registry_log &"
+bash -c "nohup ${package_runner} verdaccio &>$tmp_registry_log &"
 
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
