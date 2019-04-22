@@ -2,7 +2,7 @@
 
 set -e
 
-help() {
+function help {
   echo ""
 }
 
@@ -21,7 +21,7 @@ while getopts ":u:p:e:-:" opt; do
     ;;
     -)
       if [ $OPTARG = "--help" ]; then
-
+        help
       fi
 
       VALUE="${OPTARG#*=}" # removes "--arg="
