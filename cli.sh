@@ -4,10 +4,8 @@ set -e
 
 local_registry=${LOCAL_REGISTRY_URL:-"http://localhost:4873"}
 if [ ! -z $PACKAGE_RUNNER ]; then
-  echo "Using $PACKAGE_RUNNER from env variable"
   package_runner=$PACKAGE_RUNNER
 elif [ -f pnpm-lock.yaml ]; then
-  echo "Using $PACKAGE_RUNNER from pnpm-lock.yaml"
   package_runner="pnpx"
 else
   package_runner="npx"
