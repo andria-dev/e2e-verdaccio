@@ -2,13 +2,64 @@
 
 set -e
 
-local_registry=${LOCAL_REGISTRY_URL:-"http://localhost:4873"}
-if [ ! -z $PACKAGE_RUNNER ]; then
-  package_runner=$PACKAGE_RUNNER
-elif [ -f pnpm-lock.yaml ]; then
-  package_runner="pnpx"
-else
-  package_runner="npx"
+while getopts ":u:p:e:-:" opt; do
+  case $opt in
+    u)
+      username=$OPTARG
+      echo $username
+      exit
+    ;;
+    p)
+      password=$OPTARG
+    ;;
+    e)
+      email=$OPTARG
+    ;;
+    -)
+      VALUE="${OPTARG#*=}" # removes "--arg="
+      if [ -z $VALUE ] || [ $VALUE = $OPTARG ]; then
+        echo "Invalid option, long args must take a value"
+        exit 1
+      fi
+
+      case $OPTARG in
+        registry-url=?*)
+          local_registry=${VALUE?local-registry must take a value}
+        ;;
+        package-runner=?*)
+          package_runner=${VALUE?package-runner must take a value}
+        ;;
+      esac
+    ;;
+    \?)
+      echo "Invalid option -$OPTARG"
+      exit 1
+    ;;
+  esac
+done
+
+if [ -z $local_registry ]; then
+  local_registry="http://localhost:4873"
+fi
+
+if [ -z $username ]; then
+  username="test"
+fi
+
+if [ -z $password ]; then
+  password="test"
+fi
+
+if [ -z $email ]; then
+  email="test@test.com"
+fi
+
+if [ -z $package_runner ]; then
+  if [ -f pnpm-lock.yaml ]; then
+    package_runner="pnpx"
+  else
+    package_runner="npx"
+  fi
 fi
 
 # Start local registry
@@ -19,7 +70,7 @@ bash -c "nohup verdaccio &>$tmp_registry_log &"
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
 # Login so that we can "publish"
-bash -c "${package_runner} npm-cli-login -u test -p test -e test@test.com -r $local_registry"
+bash -c "${package_runner} npm-cli-login -u $username -p $password -e $email -r $local_registry"
 
 # Unpublish current version
 bash -c "npm unpublish -f --registry $local_registry"
