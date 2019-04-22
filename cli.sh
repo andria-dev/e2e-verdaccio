@@ -2,11 +2,20 @@
 
 set -e
 
-function help {
-  echo ""
+help() {
+  echo "Usage: e2e-verdaccio [options]"
+  echo
+  echo "Registry Login Options:"
+  echo -e "  -u  Value for the username. Default: test"
+  echo -e "  -p  Value for the password. Default: test"
+  echo -e "  -e  Value for the email. Default: test@test.com"
+  echo
+  echo "Other Options:"
+  echo -e "  --port            The port for Verdaccio. Default: 4873"
+  echo -e "  --package-runner  The command to use for running npm packages. Defaults to pnpm when pnpm-lock.yaml exists, othwerwise, npm."
 }
 
-while getopts ":u:p:e:-:" opt; do
+while getopts ":u:p:e:h-:" opt; do
   case $opt in
     u)
       username=$OPTARG
@@ -19,9 +28,14 @@ while getopts ":u:p:e:-:" opt; do
     e)
       email=$OPTARG
     ;;
+    h)
+      help
+      exit
+    ;;
     -)
       if [ $OPTARG = "--help" ]; then
         help
+        exit
       fi
 
       VALUE="${OPTARG#*=}" # removes "--arg="
@@ -32,10 +46,10 @@ while getopts ":u:p:e:-:" opt; do
 
       case $OPTARG in
         port=?*)
-          port=${VALUE?local-registry must take a value}
+          port=$VALUE
         ;;
         package-runner=?*)
-          package_runner=${VALUE?package-runner must take a value}
+          package_runner=$VALUE
         ;;
       esac
     ;;
