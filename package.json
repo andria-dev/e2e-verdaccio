@@ -2,6 +2,15 @@
   "name": "e2e-verdaccio",
   "version": "1.0.0",
   "description": "Tests publishing with verdaccio and leaves it running for your use.",
+  "homepage": "https://github.com/ChrisBrownie55/e2e-verdaccio#readme",
+  "bugs": {
+    "url": "https://github.com/ChrisBrownie55/e2e-verdaccio/issues",
+    "email": "chbphone55@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChrisBrownie55/e2e-verdaccio.git"
+  },
   "keywords": [
     "verdaccio",
     "e2e",
@@ -10,7 +19,7 @@
   ],
   "license": "MIT",
   "bin": {
-    "e2e-verdaccio": "cli.sh"
+    "e2e-verdaccio": "./cli.sh"
   },
   "files": [
     "cli.sh"
