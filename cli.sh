@@ -2,6 +2,10 @@
 
 set -e
 
+help() {
+  echo ""
+}
+
 while getopts ":u:p:e:-:" opt; do
   case $opt in
     u)
@@ -16,6 +20,10 @@ while getopts ":u:p:e:-:" opt; do
       email=$OPTARG
     ;;
     -)
+      if [ $OPTARG = "--help" ]; then
+
+      fi
+
       VALUE="${OPTARG#*=}" # removes "--arg="
       if [ -z $VALUE ] || [ $VALUE = $OPTARG ]; then
         echo "Invalid option, long args must take a value"
@@ -23,8 +31,8 @@ while getopts ":u:p:e:-:" opt; do
       fi
 
       case $OPTARG in
-        registry-url=?*)
-          local_registry=${VALUE?local-registry must take a value}
+        port=?*)
+          port=${VALUE?local-registry must take a value}
         ;;
         package-runner=?*)
           package_runner=${VALUE?package-runner must take a value}
@@ -38,9 +46,10 @@ while getopts ":u:p:e:-:" opt; do
   esac
 done
 
-if [ -z $local_registry ]; then
-  local_registry="http://localhost:4873"
+if [ -z $port ]; then
+  port="4873"
 fi
+registry_url="http://localhost:$port"
 
 if [ -z $username ]; then
   username="test"
@@ -64,20 +73,23 @@ fi
 
 # Start local registry
 tmp_registry_log=`mktemp`
-bash -c "nohup ${package_runner} verdaccio &>$tmp_registry_log &"
+nohup ${package_runner} verdaccio --listen $port &>$tmp_registry_log &
+verdaccio_pid=$!
 
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
 # Login so that we can "publish"
-bash -c "${package_runner} npm-cli-login -u $username -p $password -e $email -r $local_registry"
+${package_runner} npm-cli-login -u $username -p $password -e $email -r $registry_url
 
 # Unpublish current version
-bash -c "npm unpublish -f --registry $local_registry"
+npm unpublish -f --registry $registry_url
 # Run publish command
-bash -c "npm publish --registry $local_registry"
+npm publish --registry $registry_url
 
 echo
-echo "Running the registry on http://localhost:4873"
+echo "Running the registry on $registry_url"
 read -n 1 -s -r -p "Press any key to exit and close the verdaccio server"
 echo
+
+kill -9 $verdaccio_pid
