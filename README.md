@@ -52,6 +52,8 @@ Here is a list of all of the CLI options
 
 ```
 Usage: e2e-verdaccio [options]
+       e2e-verdaccio -u user -p pass -e email@email.com
+       e2e-verdaccio --port=8000 --package-runner=pnpx
 
 Registry Login Options:
   -u  Value for the username. Default: test
@@ -60,5 +62,5 @@ Registry Login Options:
 
 Other Options:
   --port            The port for Verdaccio. Default: 4873
-  --package-runner  The command to use for running npm packages. Defaults to pnpx when pnpm-lock.yaml exists, othwerwise, npx.
+  --package-runner  The command to use for running npm packages. Defaults to pnpx when pnpm-lock.yaml exists, otherwise, npx.
 ```

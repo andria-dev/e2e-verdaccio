@@ -4,6 +4,8 @@ set -e
 
 help() {
   echo "Usage: e2e-verdaccio [options]"
+  echo "       e2e-verdaccio -u user -p pass -e email@email.com"
+  echo "       e2e-verdaccio --port=8000 --package-runner=pnpx"
   echo
   echo "Registry Login Options:"
   echo -e "  -u  Value for the username. Default: test"
